@@ -12,6 +12,7 @@ function App() {
   let [따봉, 따봉변경] = useState(0);
   let [idx, setIdx] = useState(0);
   let menu = ['밥', '빵']
+  let [modal, modal변경] = useState(false);
 
   function 제목바꾸기(){
     setIdx((idx + 1) % 2)
@@ -22,7 +23,7 @@ function App() {
     newArray[0] = '햄버거'
     글제목변경2(newArray)
   }
-
+  
   return (
     // return 안에는 하나의 div 태그만 올 수 있음. 
     // div 안에 div 여러개 넣는 것은 가능
@@ -40,13 +41,18 @@ function App() {
         <p>2월 18일 발행</p>
         <hr/>
       </div>
-      <div className="list">
+      <div className="list" onClick={() => { modal변경(!modal)}}>
         <h3>{ 글제목2[1] }<span onClick={제목바꾸기2}>😉</span>{글제목2}</h3>
         <p>2월 18일 발행</p>
         <hr/>
       </div>
-
-      <Modal></Modal>
+      {
+        // 중괄호 안에는 변수만 올 수 있음 -> 조건 넣으려면 삼항연산자 사용
+        modal === true
+        ? <Modal></Modal>
+        : null
+        // 아무것도 안보이고 싶을 때는 null 사용
+      }
       <Modal />
     </div>
   );
