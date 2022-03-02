@@ -14,6 +14,7 @@ function App() {
   let menu = ['밥', '빵']
   let [modal, modal변경] = useState(false);
   let [num, setNum] = useState(0)
+  let [입력값, set입력값] = useState('');
 
   function 제목바꾸기(){
     setIdx((idx + 1) % 2)
@@ -59,9 +60,10 @@ function App() {
       
 
       {
-        글제목2.map((원소) => {
+        글제목2.map((원소, i) => {
           return (
-            <div className="list" onClick={() => { modal변경(!modal)}}>
+            // warning 안생기게 하려면 key 지정해줘야함
+            <div className="list" key={i} onClick={() => { modal변경(!modal)}}>
             <h3>{ 원소 }<span onClick={제목바꾸기2}>😉</span></h3>
             <p>2월 18일 발행</p>
             <hr/>
@@ -69,15 +71,17 @@ function App() {
           )
         })}
 
+        <input onChange={(e) =>{set입력값(e.target.value)}}/>
+
         <button onClick={() => { setNum(0) }}>버튼1</button>
         <button onClick={() => {setNum(1) }}>버튼2</button>
         <button onClick={() => { setNum(2) }}>버튼3</button>
-        <Modal 글제목2={글제목2} num={num}/>
+        <Modal 글제목2={글제목2} num={num} 입력값={입력값}/>
 
       {
         // 중괄호 안에는 변수, 함수명만 올 수 있음 -> 조건 넣으려면 삼항연산자 사용
         modal === true
-        ? <Modal 글제목2={글제목2} 텍스트="텍스트" num={num}></Modal>
+        ? <Modal 글제목2={글제목2} 텍스트="텍스트" num={num} 입력값={입력값}></Modal>
         : null
         // 아무것도 안보이고 싶을 때는 null 사용
       }
@@ -96,7 +100,7 @@ function Modal(props){
       <div>
         <div className="modal">
           <h2> { props.글제목2 ?  props.글제목2[props.num] : null}</h2>
-          <p>날짜</p>
+          <p>{props.입력값}</p>
           <p>{props.텍스트}</p>
         </div>
       </div>
