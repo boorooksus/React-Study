@@ -71,7 +71,7 @@ function App() {
       {
         // 중괄호 안에는 변수, 함수명만 올 수 있음 -> 조건 넣으려면 삼항연산자 사용
         modal === true
-        ? <Modal></Modal>
+        ? <Modal 글제목2={글제목2} 텍스트="텍스트"></Modal>
         : null
         // 아무것도 안보이고 싶을 때는 null 사용
       }
@@ -83,16 +83,16 @@ function App() {
 // React Component
 // 이름은 관습적으로 대문자로 시작
 // 선언 위치는 'function App()'과 나란히
-function Modal(){
+function Modal(props){
   // return은 태그만 가능
   return (
     // fragment 문법 (div 대신 사용)
     <>
       <div>
         <div className="modal">
-          <h2>제목</h2>
+          <h2> { props.글제목2 ?  props.글제목2[0] : null}</h2>
           <p>날짜</p>
-          <p>상세 내용</p>
+          <p>{props.텍스트}</p>
         </div>
       </div>
     </>
