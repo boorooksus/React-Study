@@ -13,6 +13,7 @@ function App() {
   let [idx, setIdx] = useState(0);
   let menu = ['밥', '빵']
   let [modal, modal변경] = useState(false);
+  let [num, setNum] = useState(0)
 
   function 제목바꾸기(){
     setIdx((idx + 1) % 2)
@@ -68,14 +69,18 @@ function App() {
           )
         })}
 
+        <button onClick={() => { setNum(0) }}>버튼1</button>
+        <button onClick={() => {setNum(1) }}>버튼2</button>
+        <button onClick={() => { setNum(2) }}>버튼3</button>
+        <Modal 글제목2={글제목2} num={num}/>
+
       {
         // 중괄호 안에는 변수, 함수명만 올 수 있음 -> 조건 넣으려면 삼항연산자 사용
         modal === true
-        ? <Modal 글제목2={글제목2} 텍스트="텍스트"></Modal>
+        ? <Modal 글제목2={글제목2} 텍스트="텍스트" num={num}></Modal>
         : null
         // 아무것도 안보이고 싶을 때는 null 사용
       }
-      <Modal />
     </div>
   );
 }
@@ -90,7 +95,7 @@ function Modal(props){
     <>
       <div>
         <div className="modal">
-          <h2> { props.글제목2 ?  props.글제목2[0] : null}</h2>
+          <h2> { props.글제목2 ?  props.글제목2[props.num] : null}</h2>
           <p>날짜</p>
           <p>{props.텍스트}</p>
         </div>
