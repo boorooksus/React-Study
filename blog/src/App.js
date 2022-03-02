@@ -15,6 +15,7 @@ function App() {
   let [modal, modal변경] = useState(false);
   let [num, setNum] = useState(0)
   let [입력값, set입력값] = useState('');
+  let [text, setText] = useState('');
 
   function 제목바꾸기(){
     setIdx((idx + 1) % 2)
@@ -70,6 +71,15 @@ function App() {
           </div>
           )
         })}
+
+        <div className="publish">
+          <input onChange={(e) => {setText(e.target.value)}}/>
+          <button onClick={() => {
+              var new글제목2 = [...글제목2];
+              new글제목2.unshift(text)
+              글제목변경2(new글제목2)
+          }}>저장</button>
+        </div>
 
         <input onChange={(e) =>{set입력값(e.target.value)}}/>
 
