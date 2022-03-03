@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<ProductList shoes={shoes} />} />
 
-        <Route exact path="/detail/*" element = {<Detail />}/>
+        <Route exact path="/detail/:id" element = {<Detail shoes={shoes}/>}/>
       </Routes>
     </div>
   );
@@ -46,7 +46,7 @@ function ProductList(props){
 function Products(props){
 
   const products = props.shoes;
-  const productList = products.map((product, i) => {return <div className="col-md-4" key={i}><Link to="/detail"><img src={"https://codingapple1.github.io/shop/shoes" + (i + 1) + ".jpg"} width="100%"></img><h4>{product.title}</h4><p>{product.content}</p></Link></div>});
+  const productList = products.map((product, i) => {return <div className="col-md-4" key={i}><Link to={"/detail/" + i}><img src={"https://codingapple1.github.io/shop/shoes" + (i + 1) + ".jpg"} width="100%"></img><h4>{product.title}</h4><p>{product.content}</p></Link></div>});
 
   // let productList = new Array()
   // for (var i = 0; i < products.length; i++){
@@ -70,7 +70,8 @@ function MyNavbar(){
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
         <Nav><Link to="/">Home</Link></Nav>
-        <Nav><Link to="/detail">Detil</Link></Nav>
+        <Nav><Link to="/detail">Detil</Link></Nav
+        >
         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
