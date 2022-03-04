@@ -12,6 +12,7 @@ import axios from 'axios';
 function App() {
 
   let [shoes, setShoes] = useState(Data);
+  let [stock, setStock] = useState([10, 11, 12]);
 
 
   return (
@@ -21,7 +22,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<ProductList shoes={ shoes } setShoes={ setShoes } />} />
 
-        <Route exact path="/detail/:id" element = {<Detail shoes={shoes}/>}/>
+        <Route exact path="/detail/:id" element={<Detail shoes={shoes} stock={ stock } setStock={ setStock } />}/>
       </Routes>
     </div>
   );

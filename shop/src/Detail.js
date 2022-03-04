@@ -87,11 +87,22 @@ function Detail(props) {
           <h4 className="pt-5">{product.title}</h4>
           <p>{product.content}</p>
           <p>{product.price}원</p>
-          <button className="btn btn-danger">주문하기</button> 
+          <Stock stock={props.stock}  id={id}></Stock>
+          <button className="btn btn-danger" onClick={() => {
+            let arr = [...props.stock]
+            arr[id] -= 1
+            props.setStock(arr)
+          }}>주문하기</button> 
           <button className="btn btn-warning" onClick={() => {navigate(-1)}}>뒤로가기</button> 
         </div>
       </div>
     </div> 
+  )
+}
+
+function Stock(props) {
+  return (
+    <p>재고: { props.stock[props.id] }</p>
   )
 }
 
