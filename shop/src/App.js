@@ -65,11 +65,11 @@ function MyNavbar(){
     <div>
       <Navbar bg="light" expand="lg">
   <Container>
-    <Navbar.Brand href="#home">This is Title</Navbar.Brand>
+    <Navbar.Brand href="/">This is Title</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
-        <Nav><Link to="/">Home</Link></Nav>
+              <Nav.Link as={ Link } to="/">Home</Nav.Link>
         <Nav><Link to="/detail">Detil</Link></Nav
         >
         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
