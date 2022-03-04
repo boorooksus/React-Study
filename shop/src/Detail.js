@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import './Detail.scss';
 
 // styled-components
 let 박스 = styled.div`
@@ -22,8 +23,14 @@ function Detail(props){
     return (
       <div className="container">
         <박스>
-          <제목 색상={'lightSkyBlue'}>상세페이지</제목>
+        {/* 여기 props 전달은 큰따옴표, 중괄호 둘 다 가능 */}
+          <제목 색상="lightSkyBlue">상세페이지</제목>
+          <제목 className="red">상세페이지</제목>
         </박스>
+        <div className="my-alert">
+        <p>재고 임박</p></div>
+        <div className="my-alert2">
+        <p>재고 임박2</p></div>
         <div className="row">
           <div className="col-md-6">
             <img src={"https://codingapple1.github.io/shop/shoes" + (Number(id) + 1) + ".jpg"} width="100%" />
