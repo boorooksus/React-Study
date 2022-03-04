@@ -5,6 +5,7 @@ import { Navbar, Container, NavDropdown, Nav, Card, Button} from 'react-bootstra
 import Data from './data.js';
 import { Link, Routes, Route } from 'react-router-dom';
 import Detail from './Detail'
+import axios from 'axios';
 
 // 부트스트랩 사용하기: npm으로 부트스트랩 설치(react-bootstrap 용도)
 // public/index.html에 링크 태그 import (그냥 부트스트랩 용도)
@@ -18,7 +19,7 @@ function App() {
       <MyNavbar />
 
       <Routes>
-        <Route exact path="/" element={<ProductList shoes={shoes} />} />
+        <Route exact path="/" element={<ProductList shoes={ shoes } setShoes={ setShoes } />} />
 
         <Route exact path="/detail/:id" element = {<Detail shoes={shoes}/>}/>
       </Routes>
@@ -26,10 +27,11 @@ function App() {
   );
 }
 
-function ProductList(props){
+function ProductList(props) {
 
   return(
-    <div><Card className="background">
+    <div>
+      <Card className="background">
       <Card.Header>Featured</Card.Header>
       <Card.Body>
         <Card.Title>Special title treatment</Card.Title>
@@ -38,7 +40,33 @@ function ProductList(props){
         </Card.Text>
         <Button variant="primary">Go somewhere</Button>
         </Card.Body>
-       </Card><Products shoes={props.shoes} /></div>
+    </Card><Products shoes={props.shoes} />
+      
+      <button className="btn btn-primary" onClick={(e) => {
+
+        axios.post('서버URL', {id: 123, pw: 123});
+        
+        axios.get('https://codingapple1.github.io/shop/data2.json')
+        .then((res) => {
+          console.log('Ajax Success');
+
+          console.log(res.data[0]);
+
+          let arr = [...props.shoes]
+
+          // 아래 map과 같은 결과 코드
+          props.setShoes([...props.shoes, ...res.data]);
+          // res.data.map((product, i) => {arr.push(product)})
+          
+        })
+        .catch(() => {
+          console.log('Ajax Failed');
+            
+        })
+
+      }}>더보기</button>
+    
+    </div>
   )
 }
 
