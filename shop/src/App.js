@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Navbar, Container, NavDropdown, Nav, Card, Button} from 'react-bootstrap';
@@ -6,6 +6,10 @@ import Data from './data.js';
 import { Link, Routes, Route } from 'react-router-dom';
 import Detail from './Detail'
 import axios from 'axios';
+
+// 같은 값 공유하는 범위 생성
+// 다른 파일에서도 공유하려면 앞에 export 붙이기
+export let StockContext = React.createContext();
 
 // 부트스트랩 사용하기: npm으로 부트스트랩 설치(react-bootstrap 용도)
 // public/index.html에 링크 태그 import (그냥 부트스트랩 용도)
@@ -20,9 +24,21 @@ function App() {
       <MyNavbar />
 
       <Routes>
-        <Route exact path="/" element={<ProductList shoes={ shoes } setShoes={ setShoes } />} />
+        <Route exact path="/" element={<div>
+            {/* 공유할 context 범위 감싸기 */}
+            <StockContext.Provider value={stock}>
+              <ProductList shoes={shoes} setShoes={setShoes} />
+            </StockContext.Provider>
+          </div>
+          } />
 
-        <Route exact path="/detail/:id" element={<Detail shoes={shoes} stock={ stock } setStock={ setStock } />}/>
+        <Route exact path="/detail/:id" element={
+          <div>
+            <StockContext.Provider value={stock}>
+            <Detail shoes={shoes} stock={stock} setStock={setStock} />
+            </StockContext.Provider>
+          </div>
+        } />
       </Routes>
     </div>
   );
@@ -41,7 +57,9 @@ function ProductList(props) {
         </Card.Text>
         <Button variant="primary">Go somewhere</Button>
         </Card.Body>
-    </Card><Products shoes={props.shoes} />
+      </Card>
+      
+      <Products shoes={props.shoes} />
       
       <button className="btn btn-primary" onClick={(e) => {
 
@@ -72,17 +90,21 @@ function ProductList(props) {
 }
 
 
-function Products(props){
+function Products(props) {
+  
+  // 공유된 context 불러오기
+  let stocks = useContext(StockContext);
 
   const products = props.shoes;
-  const productList = products.map((product, i) => {return <div className="col-md-4" key={i}><Link to={"/detail/" + i}><img src={"https://codingapple1.github.io/shop/shoes" + (i + 1) + ".jpg"} width="100%"></img><h4>{product.title}</h4><p>{product.content}</p></Link></div>});
+  const productList = products.map((product, i) => { return <div className="col-md-4" key={i}><Link to={"/detail/" + i}><img src={"https://codingapple1.github.io/shop/shoes" + (i + 1) + ".jpg"} width="100%"></img><h4>{product.title}</h4><p>{product.content}</p>{ stocks[i] }</Link></div>});
 
   // let productList = new Array()
   // for (var i = 0; i < products.length; i++){
   //   productList[i] = <div className="col-md-4" key={i}><img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%"></img><h4>{props.shoes[i].title}</h4><p>{props.shoes[i].content}</p></div>
   // }
 
-  const outside = <div className="container"><div className="row">{productList}</div></div>
+  const outside = <div className="container">    
+    <div className="row">{productList}</div></div>
 
   return (
     outside

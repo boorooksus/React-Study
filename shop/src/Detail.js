@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss';
+import { StockContext } from './App.js';
 
 // styled-components
 let 박스 = styled.div`
@@ -87,7 +88,7 @@ function Detail(props) {
           <h4 className="pt-5">{product.title}</h4>
           <p>{product.content}</p>
           <p>{product.price}원</p>
-          <Stock stock={props.stock}  id={id}></Stock>
+          <Stock id={id}></Stock>
           <button className="btn btn-danger" onClick={() => {
             let arr = [...props.stock]
             arr[id] -= 1
@@ -101,8 +102,11 @@ function Detail(props) {
 }
 
 function Stock(props) {
+  
+  let stocks = useContext(StockContext);
+
   return (
-    <p>재고: { props.stock[props.id] }</p>
+    <p>재고: { stocks[props.id] }</p>
   )
 }
 
