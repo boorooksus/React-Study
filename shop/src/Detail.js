@@ -5,6 +5,7 @@ import "./Detail.scss";
 import { StockContext } from "./App.js";
 import { Navbar, Item, Nav } from "react-bootstrap";
 import { CSSTransition } from "react-transition-group";
+import { connect } from "react-redux";
 
 // styled-components
 let 박스 = styled.div`
@@ -103,6 +104,9 @@ function Detail(props) {
               let arr = [...props.stock];
               arr[id] -= 1;
               props.setStock(arr);
+
+              props.dispatch({ type: "항목추가", payload: { id: id, name: "새상품", quan: 1 } });
+              navigate("/cart");
             }}
           >
             주문하기
@@ -167,7 +171,7 @@ function TabContent(props) {
   });
 
   if (props.tabStatus === 0) {
-    return <dvi>1 번째 내용</dvi>;
+    return <div>1 번째 내용</div>;
   } else if (props.tabStatus === 1) {
     return <div>2 번째 내용</div>;
   } else if (props.tabStatus === 2) {
@@ -181,4 +185,11 @@ function Stock(props) {
   return <p>재고: {stocks[props.id]}</p>;
 }
 
-export default Detail;
+function 함수명(state) {
+  return {
+    state: state.reducer,
+  };
+}
+
+// export default Detail;
+export default connect(함수명)(Detail);
