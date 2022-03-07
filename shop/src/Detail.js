@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import "./Detail.scss";
@@ -76,11 +76,8 @@ function Detail(props) {
         <제목 색상="lightSkyBlue">상세페이지</제목>
         <제목 className="red">상세페이지</제목>
       </박스>
-      <input
-        onChange={(e) => {
-          setInputData(e.target.value);
-        }}
-      />
+      <Input setInputData={setInputData} />
+
       <div className="my-alert" style={{ visibility: visibility }}>
         <p>재고 임박</p>
       </div>
@@ -164,6 +161,18 @@ function Detail(props) {
     </div>
   );
 }
+
+// memo로 감싸면 불필요한 재렌더링 막을수 있음.
+// 관련된 props가 변경될 때만 재렌더링
+let Input = memo(function (props) {
+  return (
+    <input
+      onChange={(e) => {
+        props.setInputData(e.target.value);
+      }}
+    />
+  );
+});
 
 function TabContent(props) {
   useEffect(() => {
