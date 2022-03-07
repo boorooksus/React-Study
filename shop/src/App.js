@@ -1,12 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, lazy, Suspense } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Navbar, Container, NavDropdown, Nav, Card, Button } from "react-bootstrap";
 import Data from "./data.js";
 import { Link, Routes, Route } from "react-router-dom";
-import Detail from "./Detail";
 import axios from "axios";
 import Cart from "./Cart";
+// import Detail from "./Detail";
+let Detail = lazy(() => {
+  return import("./Detail.js");
+});
 
 // 같은 값 공유하는 범위 생성
 // 다른 파일에서도 공유하려면 앞에 export 붙이기
@@ -42,7 +45,9 @@ function App() {
           element={
             <div>
               <StockContext.Provider value={stock}>
-                <Detail shoes={shoes} stock={stock} setStock={setStock} />
+                <Suspense fallback={<div>로딩중</div>}>
+                  <Detail shoes={shoes} stock={stock} setStock={setStock} />
+                </Suspense>
               </StockContext.Provider>
             </div>
           }

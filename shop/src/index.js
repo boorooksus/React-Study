@@ -21,18 +21,26 @@ let 기본값 = [
 ];
 
 function reducer(state = 기본값, 액션) {
+  console.log(액션.payload);
   if (액션.type === "항목추가") {
     let copy = [...state];
-    copy.push(액션.payload);
+    let idx = copy.findIndex((a) => {
+      return a.id === 액션.payload.id;
+    });
+    console.log(idx);
+    if (idx >= 0) {
+      copy[idx].quan++;
+    } else {
+      copy.push(액션.payload);
+    }
     return copy;
   } else if (액션.type === "수량증가") {
-    console.log(액션.payload);
     let copy = [...기본값];
-    copy[0].quan++;
+    copy[액션.payload].quan++;
     return copy;
   } else if (액션.type === "수량감소") {
     let copy = [...기본값];
-    copy[0].quan--;
+    copy[액션.payload].quan--;
     return copy;
   } else {
     return state;

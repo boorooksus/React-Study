@@ -105,7 +105,7 @@ function Detail(props) {
               arr[id] -= 1;
               props.setStock(arr);
 
-              props.dispatch({ type: "항목추가", payload: { id: id, name: "새상품", quan: 1 } });
+              props.dispatch({ type: "항목추가", payload: { id: Number(id), name: "새상품", quan: 1 } });
               navigate("/cart");
             }}
           >
