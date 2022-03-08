@@ -97,8 +97,35 @@ function ProductList(props) {
       >
         더보기
       </button>
+
+      <Recent />
     </div>
   );
+}
+
+function Recent() {
+  var recentItems = JSON.parse(localStorage.getItem("recent"));
+  let outside = <div>hi</div>;
+
+  if (recentItems) {
+    console.log("recent: ", recentItems);
+    const productList = recentItems.map((id, i) => {
+      return (
+        <div className="col-md-4" key={i}>
+          <img src={"https://codingapple1.github.io/shop/shoes" + (Number(id) + 1) + ".jpg"} width="50%"></img>
+        </div>
+      );
+    });
+
+    outside = (
+      <div className="container">
+        최근 본 상품
+        <div className="row">{productList}</div>
+      </div>
+    );
+  }
+
+  return outside;
 }
 
 function Products(props) {

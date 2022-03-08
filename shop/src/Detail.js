@@ -69,6 +69,20 @@ function Detail(props) {
     console.log("run once");
   }, []);
 
+  useEffect(() => {
+    var recentItems = JSON.parse(localStorage.getItem("recent"));
+    if (recentItems) {
+      var idx = recentItems.findIndex((a) => a === id);
+      if (idx >= 0) {
+        recentItems.splice(idx, 1);
+      }
+      recentItems.unshift(id);
+      localStorage.setItem("recent", JSON.stringify(recentItems));
+    } else {
+      localStorage.setItem("recent", JSON.stringify([id]));
+    }
+  }, []);
+
   return (
     <div className="container">
       <박스>
